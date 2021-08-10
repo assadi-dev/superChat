@@ -3,6 +3,7 @@ const app = express();
 const server = require("http").createServer(app);
 const path = require("path");
 const io = require("socket.io")(server, { cors: { origin: "*" } });
+var ent = require("ent");
 const session = require("express-session")({
   secret: "my-secret",
   resave: true,
@@ -30,6 +31,7 @@ io.use(
 io.on("connection", (socket) => {
   //reception du pseudo client
   socket.on("visiteur", (pseudo) => {
+    pseudo = ent.encode(pseudo);
     socket.handshake.session.pseudo = pseudo;
     socket.handshake.session.save();
 
@@ -53,6 +55,7 @@ io.on("connection", (socket) => {
 
   //reception des messages du client
   socket.on("message", (message) => {
+    message = ent.encode(message);
     const data = { author: socket.handshake.session.pseudo, message: message };
     socket.broadcast.emit("message", data);
   });

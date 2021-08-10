@@ -19,7 +19,7 @@ if (sessionStorage.getItem("pseudo")) {
   socket.emit("visiteur", sessionStorage.getItem("pseudo"));
 } else {
   loginModal.show();
-  querySelector("#sendMessage").addEventListener("submit", (e) => {
+  document.querySelector("#sendMessage").addEventListener("submit", (e) => {
     e.preventDefault();
     loginModal.show();
   });
