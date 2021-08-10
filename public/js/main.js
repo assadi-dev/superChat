@@ -19,6 +19,10 @@ if (sessionStorage.getItem("pseudo")) {
   socket.emit("visiteur", sessionStorage.getItem("pseudo"));
 } else {
   loginModal.show();
+  querySelector("#sendMessage").addEventListener("submit", (e) => {
+    e.preventDefault();
+    loginModal.show();
+  });
 }
 
 document.querySelector("#getPseudo").addEventListener("submit", (e) => {
@@ -46,6 +50,7 @@ document.querySelector("#sendMessage").addEventListener("submit", (e) => {
   const message = document.querySelector("#messageContent").value;
   socket.emit("message", message);
   let data = { author: sessionStorage.getItem("pseudo"), message: message };
+  document.querySelector("#messageContent").value = "";
   addElement(data);
 });
 
